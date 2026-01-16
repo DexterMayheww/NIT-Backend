@@ -1,0 +1,28 @@
+<?php
+
+use Drupal\user\UserInterface;
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_simple_oauth_oidc_claims_alter().
+ */
+function simple_oauth_companion_simple_oauth_oidc_claims_alter(array &$claim_values, array &$context) {
+  $account_stub = $context['account'];
+  $user = User::load($account_stub->id());
+
+  if ($user instanceof UserInterface) {
+    $phone = $user->get('field_phone_number')->value;
+    \Drupal::logger('simple_oauth_companion')->notice(
+        'Processing Claims for User @uid. Phone Found: @phone', 
+        ['@uid' => $user->id(), '@phone' => $phone ?? 'NULL']
+    );
+
+    if ($phone) {
+       // 1. Try Standard Claim
+       $claim_values['phone_number'] = $phone;
+       
+       // 2. FORCE Custom Claim (This usually bypasses OIDC filters)
+       $claim_values['field_phone_number'] = $phone;
+    }
+  }
+}

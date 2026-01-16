@@ -1,0 +1,9 @@
+# headless_otp.info.yml - /web/modules/custom/headless_otp/headless_otp.info.yml
+name: 'Headless OTP'
+type: module
+description: 'Handles OTP generation and Twilio sending via direct SDK.'
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:key
+  - drupal:user

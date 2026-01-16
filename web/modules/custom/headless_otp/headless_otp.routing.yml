@@ -1,0 +1,16 @@
+# headless_otp.routing.yml - /web/modules/custom/headless_otp/headless_otp.routing.yml
+headless_otp.send:
+  path: '/api/v1/auth/otp/send'
+  defaults:
+    _controller: '\Drupal\headless_otp\Controller\OtpApiController::send'
+  methods: [POST]
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+headless_otp.verify:
+  path: '/api/v1/auth/otp/verify'
+  defaults:
+    _controller: '\Drupal\headless_otp\Controller\OtpApiController::verify'
+  methods: [POST]
+  requirements:
+    _user_is_logged_in: 'TRUE'

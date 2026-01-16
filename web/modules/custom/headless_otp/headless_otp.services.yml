@@ -1,0 +1,5 @@
+# headless_otp.services.yml - /web/modules/custom/headless_otp/headless_otp.services.yml
+services:
+  headless_otp.manager:
+    class: Drupal\headless_otp\Service\OtpManager
+    arguments: ['@logger.factory', '@key.repository']
