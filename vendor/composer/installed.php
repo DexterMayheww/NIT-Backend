@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'drupal/recommended-project',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '8e6a857ade0f91c1218bb2a2f41c1ff894871340',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -425,9 +425,9 @@
             'dev_requirement' => false,
         ),
         'drupal/recommended-project' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '8e6a857ade0f91c1218bb2a2f41c1ff894871340',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -675,6 +675,15 @@
             'replaced' => array(
                 0 => '~2.0',
             ),
+        ),
+        'pantheon-systems/drupal-integrations' => array(
+            'pretty_version' => '11.2.0',
+            'version' => '11.2.0.0',
+            'reference' => 'fa9405e979ebe04c2580b3e96ce2b1e4dba9a39c',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../pantheon-systems/drupal-integrations',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(
             'pretty_version' => 'v9.99.100',

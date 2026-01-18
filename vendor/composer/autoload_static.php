@@ -102,6 +102,7 @@ class ComposerStaticInit1c94884feafe7e7de67cff6263fe48f2
             'PhpTuf\\ComposerStager\\' => 22,
             'PhpParser\\' => 10,
             'Peast\\' => 6,
+            'Pantheon\\Integrations\\' => 22,
         ),
         'O' =>
         array (
@@ -385,6 +386,10 @@ class ComposerStaticInit1c94884feafe7e7de67cff6263fe48f2
         'Peast\\' =>
         array (
             0 => __DIR__ . '/..' . '/mck89/peast/lib/Peast',
+        ),
+        'Pantheon\\Integrations\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/pantheon-systems/drupal-integrations/src',
         ),
         'OpenIDConnectServer\\' =>
         array (

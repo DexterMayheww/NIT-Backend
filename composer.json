@@ -30,6 +30,7 @@
         "drupal/simple_oauth": "^6.1",
         "drupal/subrequests": "^3.0",
         "drush/drush": "^13.7",
+        "pantheon-systems/drupal-integrations": "^11.2",
         "twilio/sdk": "^8.10"
     },
     "conflict": {
