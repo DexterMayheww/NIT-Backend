@@ -1,0 +1,74 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_node_access().
+ */
+function college_access_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  // 1. Always allow Admin or users with bypass permission.
+  if ($account->hasPermission('bypass node access')) {
+    return AccessResult::neutral();
+  }
+
+  // 2. We only care about update and delete operations on department_types.
+  if ($node->bundle() === 'department_types' && in_array($op, ['update', 'delete'])) {
+    
+    // Ensure the user is logged in.
+    if ($account->isAnonymous()) {
+      return AccessResult::forbidden();
+    }
+
+    // Corrected Service Call: Use \Drupal::entityTypeManager()
+    $user_entity = \Drupal::entityTypeManager()->getStorage('user')->load($account->id());
+    
+    if (!$user_entity || !$user_entity->hasField('field_assigned_department')) {
+      return AccessResult::forbidden();
+    }
+
+    $assigned_dept_id = $user_entity->get('field_assigned_department')->target_id;
+
+    // Grant access only if the current node ID matches the user's assigned department.
+    if ($assigned_dept_id && $assigned_dept_id == $node->id()) {
+      return AccessResult::allowed()->addCacheableDependency($node)->addCacheableDependency($user_entity);
+    }
+
+    return AccessResult::forbidden('You are not the head of this department.');
+  }
+
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_entity_access().
+ */
+function college_access_entity_access(EntityInterface $entity, $op, AccountInterface $account) {
+  if (!$entity instanceof UserInterface || $op !== 'update') {
+    return AccessResult::neutral();
+  }
+
+  if ($account->id() == $entity->id()) {
+    return AccessResult::neutral();
+  }
+
+  if (in_array('department_head', $account->getRoles())) {
+    $head = \Drupal::entityTypeManager()->getStorage('user')->load($account->id());
+    $head_dept = $head->get('field_assigned_department')->target_id;
+    
+    $target_user_dept = $entity->get('field_assigned_department')->target_id;
+
+    // Check if target is Faculty AND in the same department.
+    if ($head_dept && $head_dept === $target_user_dept && in_array('faculty', $entity->getRoles())) {
+      return AccessResult::allowed()->addCacheableDependency($entity)->addCacheableDependency($head);
+    }
+
+    // NEW: Explicitly forbid editing anyone else.
+    return AccessResult::forbidden('You can only edit faculty in your department.');
+  }
+
+  return AccessResult::neutral();
+}

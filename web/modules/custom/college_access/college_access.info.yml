@@ -1,0 +1,13 @@
+name: 'College Access Control'
+type: module
+description: 'Enforces departmental access boundaries for Department Heads and Faculty profiles.'
+package: Custom
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - drupal:node
+  - drupal:user
+
+# Optional: Prevents the module from being uninstalled if you want to ensure 
+# security logic is always active.
+lifecycle: stable
